@@ -31,6 +31,7 @@ public class FaceManager : MonoBehaviour
     [SerializeField] Canvas canvas;
     [SerializeField] GameObject faceController;
     [SerializeField] SkeletonController skeletonController;
+    [SerializeField] FukuParticleSysytem fukuParticleSysytem;
     List<FaceController> faceControllers = new List<FaceController>();
     Instances[] faces;
 
@@ -59,6 +60,13 @@ public class FaceManager : MonoBehaviour
                 // Pass the face to FaceController
                 faceControllers[i].SetFace(currentFace);
                 faceControllers[i].gameObject.SetActive(true);
+
+                // ここからおくっちゃうよ
+                if (currentFace.emotions != null && faceControllers[i].gameObject)
+                {
+                    int _emit = (int)Mathf.Round(5.0f * currentFace.emotions.happy);
+                    fukuParticleSysytem.SetEmit(_emit);
+                }
 
                 // IDs of faces and skeletons are the same
                 id = faces[i].id;
